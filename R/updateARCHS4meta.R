@@ -11,6 +11,4 @@ updateARCHS4meta <- function(file_path) {
 updateARCHS4Index <- function(src, file_path) {
   load(paste(file_path, "/meta.rda", sep = ""))
 
-
-
 }
