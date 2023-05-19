@@ -1,0 +1,10 @@
+file_name	sample_id	gene_id	gene_id_type
+athaliana_star_matrix_20221107.h5	/meta/samples/geo_accession	/meta/genes/ensembl_gene_id	Locus tag
+celegans_star_matrix_20221107.h5	/meta/samples/geo_accession	/meta/genes/ensembl_gene_id	WormBase id
+dmelanogaster_star_matrix_20221107.h5	/meta/samples/geo_accession	/meta/genes/ensembl_gene_id	FlyBase id
+drerio_star_matrix_20211102.h5	/meta/samples/geo_accession	/meta/genes/ensembl_gene_id	ENSEMBLID
+ecoli_star_matrix_20221107.h5	/meta/samples/geo_accession	/meta/genes/ensembl_gene_id	Locus tag
+hsapiens_star_matrix_20221107.h5	/meta/samples/geo_accession	/meta/genes/ensembl_gene_id	ENSEMBLID
+mmusculus_star_matrix_20221107.h5	/meta/samples/geo_accession	/meta/genes/ensembl_gene_id	ENSEMBLID
+rnorvegicus_star_matrix_20221107.h5	/meta/samples/geo_accession	/meta/genes/ensembl_gene_id	gene
+scerevisiae_star_matrix_20221107.h5	/meta/samples/geo_accession	/meta/genes/ensembl_gene_id	Yeast id

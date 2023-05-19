@@ -9,6 +9,15 @@ updateARCHS4meta <- function(file_path) {
 }
 
 updateARCHS4Index <- function(src, file_path) {
-  load(paste(file_path, "/meta.rda", sep = ""))
+  metaindexfilename <- "index1.h5"
+  h5createFile(metaindexfilename)
+  DT_counts_meta_new_splited <- split(DT_counts_meta_indexes, DT_counts_meta_indexes$chunk)
+  names <- names(DT_counts_meta_new_splited)
+  for (i in seq_along(names)) {
+    h5write(DT_counts_meta_new_splited[[i]], metaindexfilename, paste0("/",names[i]))
+  }
 
 }
+
+
+

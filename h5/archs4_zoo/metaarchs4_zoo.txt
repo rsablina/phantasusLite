@@ -1,0 +1,9 @@
+file_name	sample_id	gene_id	gene_id_type
+Arabidopsis_thaliana_count_matrix.h5	/meta/Sample_geo_accession	/meta/genes	TAIR id
+Bos_taurus_count_matrix.h5	/meta/Sample_geo_accession	/meta/genes	ENSEMBLID
+Caenorhabditis_elegans_count_matrix.h5	/meta/Sample_geo_accession	/meta/genes	WormBase id
+Danio_rerio_count_matrix.h5	/meta/Sample_geo_accession	/meta/genes	ENSEMBLID
+Drosophila_melanogaster_count_matrix.h5	/meta/Sample_geo_accession	/meta/genes	FlyBase id
+Gallus_gallus_count_matrix.h5	/meta/Sample_geo_accession	/meta/genes	ENSEMBLID
+Rattus_norvegicus_count_matrix.h5	/meta/Sample_geo_accession	/meta/genes	ENSEMBLID
+Saccharomyces_cerevisiae_count_matrix.h5	/meta/Sample_geo_accession	/meta/genes	ORF id
