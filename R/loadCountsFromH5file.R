@@ -139,5 +139,7 @@ loadCountsFromHSDS <- function(es, src, dir) {
 }
 
 
-
+system.time()
+loadCountsFromHSDS(es, src, dir)
+system.time()
 
