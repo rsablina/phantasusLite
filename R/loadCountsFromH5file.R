@@ -2,8 +2,8 @@
 #' @export
 #' @import rhdf5client
 #' @import data.table
-#'
-#'
+#' @import rhdf5
+#' @import phantasus
 #'
 #'
 
@@ -131,15 +131,16 @@ loadCountsFromHSDS <- function(es, src, dir) {
   gene_id_type <- metatable[metatable$file_name == filename, ]$gene_id_type
 
   DT_counts_meta_indexes <- DT_counts_meta_indexes[DT_counts_meta_indexes$file == destfile, ]
+
   sampleIndexes <- match(es$geo_accession, DT_counts_meta_indexes$accession)
-  sampleIndexes <- DT_counts_meta_indexes[sampleIndexes, ]$indexes
+  phenoData(es) <- phenoData(es[, !is.na(sampleIndexes)])
+  sampleIndexes <- match(es$geo_accession, DT_counts_meta_indexes$accession)
+  sampleIndexes <- DT_counts_meta_indexes[na.omit(sampleIndexes), ]$indexes
+
   filename <- paste0(dir, '/', destfile)
   es2 <- loadCountsFromH5FileHSDS(es, src, filename, sample_id, gene_id, gene_id_type, sampleIndexes)
   return(es2)
 }
 
 
-system.time()
-loadCountsFromHSDS(es, src, dir)
-system.time()
 
