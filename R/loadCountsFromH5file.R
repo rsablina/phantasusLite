@@ -1,17 +1,9 @@
-
-#' @export
-#' @import rhdf5client
-#' @import data.table
-#' @import rhdf5
-#' @import phantasus
-#'
-#'
-
 gsmtochunk <- function(samples) {
   chunks <- ifelse(nchar(samples) >= 7, substring(samples, 1, nchar(samples) - 4), "GSM0")
   return(paste0(chunks,"nnnn"))
 }
 
+#' @import rhdf5client
 getSamples <- function(h5f, samples_id) {
   dsamples <- HSDSDataset(h5f, samples_id)
   cnt <- 1
@@ -23,6 +15,8 @@ getSamples <- function(h5f, samples_id) {
   return(unlist(sampleIndexes))
 }
 
+#' @export
+#' @import data.table
 loadCountsFromH5FileHSDS <- function(es, src, file, sample_id = NULL, gene_id = NULL, gene_id_type = NULL, sampleIndexes = NULL) {
   if (nrow(es) > 0) {
     return(es)
@@ -97,11 +91,17 @@ loadCountsFromH5FileHSDS <- function(es, src, file, sample_id = NULL, gene_id = 
 
   return(es2)
 }
-
-loadCountsFromHSDS <- function(es, src, dir) {
+#' @export
+#' @import rhdf5client
+#' @import data.table
+loadCountsFromHSDS <- function(es, url) {
   if (nrow(es) > 0) {
     return(es)
   }
+  src <- httr::parse_url(url)
+  dir <- src$query$domain
+  src <- paste0(src$scheme,'://',src$hostname,'/',src$path)
+  src <- HSDSSource(src)
   priorityfilepath <- paste(dir,"/priority.h5",sep="")
   priorityf <- HSDSFile(src, priorityfilepath)
   priorityds <- HSDSDataset(priorityf, '/priority')
