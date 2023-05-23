@@ -2,4 +2,6 @@
 
 export(gsmtochunk)
 import(data.table)
+import(phantasus)
+import(rhdf5)
 import(rhdf5client)

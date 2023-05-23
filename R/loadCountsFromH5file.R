@@ -30,7 +30,8 @@ loadCountsFromH5FileHSDS <- function(es, src, file, sample_id = NULL, gene_id = 
   f <- HSDSFile(src, file)
 
   if (is.null(sample_id) || is.null(gene_id) || is.null(gene_id_type) || is.null(priority)) {
-    metafilepath <- paste(dirname(file),"/meta.h5",sep="")
+    collection <- gsub('^.*[\\/\\]', '', dirname(file))
+    metafilepath <- paste0('/counts','/', collection, '/', collection, '.h5')
     metaf <- HSDSFile(src, metafilepath)
     metads <- HSDSDataset(metaf, '/meta')
     metatable <- metads[1:metads@shape]
@@ -49,7 +50,11 @@ loadCountsFromH5FileHSDS <- function(es, src, file, sample_id = NULL, gene_id = 
   genes <- dg[1:dg@shape]
   if (is.null(sampleIndexes)) {
     sampleIndexes <- getSamples(f, sample_id)
+    match_accession <- match(es$geo_accession, sampleIndexes)
+    phenoData(es) <- phenoData(es[, !is.na(match_accession)])
+    sampleIndexes <- match(es$geo_accession, sampleIndexes)
   }
+
   datasets <- listDatasets(f)
   if ("info/version" %in% datasets) {
     arch_version <- HSDSDataset(f, '/info/version')
@@ -60,7 +65,6 @@ loadCountsFromH5FileHSDS <- function(es, src, file, sample_id = NULL, gene_id = 
   if (is.na(arch_version)) {
     arch_version <- 8
   }
-
 
   ds <- HSDSDataset(f, '/data/expression')
   smap <- data.frame(sampleIndexes, geo_accession=es$geo_accession)
@@ -75,6 +79,7 @@ loadCountsFromH5FileHSDS <- function(es, src, file, sample_id = NULL, gene_id = 
                            phenoData = phenoData(es[, !is.na(sampleIndexes)]),
                            annotation = annotation(es),
                            experimentData = experimentData(es))
+
   if (!toupper(gene_id_type) == "GENE SYMBOL") {
     tryCatch({
       gene_symbol <- HSDSDataset(f, "/meta/genes/gene_symbol")

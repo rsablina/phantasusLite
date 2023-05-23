@@ -13,15 +13,9 @@ createMetaH5 <- function(counts_dir){
   collections <- collections[-1]
   for (collection in collections) {
     destdir <- paste0(counts_dir, '/', collection)
-
     meta <- data.table()
-  #  h5_files <- list.files(destdir, "\\.h5$", full.names = FALSE)
-   # if (!length(h5_files)) {
-   #   next
-    #}
     filename <- paste0("meta", collection, ".txt")
     h5_meta <- fread(file.path(destdir, filename), index = "file_name")
-    #h5_meta <- h5_meta[h5_meta$file_name %in% h5_files, ]
     h5filename <- paste0(collection, '.h5')
     createH5(h5_meta, h5filename, 'meta')
   }

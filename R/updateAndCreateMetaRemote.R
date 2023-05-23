@@ -1,7 +1,7 @@
 getIndexRemote <- function(src, collections) {
   DT_h5_meta <- data.table()
   for (collection in collections) {
-    filepath <- paste0('/counts//', collection, '/')
+    filepath <- paste0('/counts/', collection, '/')
     metaf <- HSDSFile(src, paste0(filepath, collection, '.h5'))
     metads <- HSDSDataset(metaf, '/meta')
     h5_meta <- metads[1:metads@shape]
