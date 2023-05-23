@@ -29,7 +29,7 @@ loadCountsFromH5FileHSDS <- function(es, src, file, sample_id = NULL, gene_id = 
   }
   f <- HSDSFile(src, file)
 
-  if (is.null(sample_id) || is.null(gene_id) || is.null(gene_id_type) || is.null(priority)) {
+  if (is.null(sample_id) || is.null(gene_id) || is.null(gene_id_type)) {
     collection <- gsub('^.*[\\/\\]', '', dirname(file))
     metafilepath <- paste0('/counts','/', collection, '/', collection, '.h5')
     metaf <- HSDSFile(src, metafilepath)
