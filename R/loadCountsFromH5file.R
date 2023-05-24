@@ -17,15 +17,18 @@ getSamples <- function(h5f, samples_id) {
 
 #' @export
 #' @import data.table
-loadCountsFromH5FileHSDS <- function(es, src, file, sample_id = NULL, gene_id = NULL, gene_id_type = NULL, sampleIndexes = NULL) {
+loadCountsFromH5FileHSDS <- function(es, url, file, sample_id = NULL, gene_id = NULL, gene_id_type = NULL, sampleIndexes = NULL) {
   if (nrow(es) > 0) {
     return(es)
   }
+  src <- httr::parse_url(url)
+  dir <- src$query$domain
+  src <- paste0(src$scheme,'://',src$hostname,'/',src$path)
+  src <- HSDSSource(src)
   f <- HSDSFile(src, file)
-
   if (is.null(sample_id) || is.null(gene_id) || is.null(gene_id_type)) {
     collection <- gsub('^.*[\\/\\]', '', dirname(file))
-    metafilepath <- paste0('/counts','/', collection, '/', collection, '.h5')
+    metafilepath <- paste0(dir,'/', collection, '/', collection, '.h5')
     metaf <- HSDSFile(src, metafilepath)
     metads <- HSDSDataset(metaf, '/meta')
     metatable <- metads[1:metads@shape]
@@ -50,12 +53,13 @@ loadCountsFromH5FileHSDS <- function(es, src, file, sample_id = NULL, gene_id = 
   }
 
   datasets <- listDatasets(f)
-  if ("info/version" %in% datasets) {
+  if ("/info/version" %in% datasets) {
     arch_version <- HSDSDataset(f, '/info/version')
   } else {
     arch_version <- HSDSDataset(f, '/meta/info/version')
   }
   arch_version <- arch_version[1:arch_version@shape[1]]
+  arch_version <- as.integer(arch_version)
   if (is.na(arch_version)) {
     arch_version <- 8
   }
@@ -64,7 +68,12 @@ loadCountsFromH5FileHSDS <- function(es, src, file, sample_id = NULL, gene_id = 
   smap <- data.frame(sampleIndexes, geo_accession=es$geo_accession)
   smap <- smap[order(smap$sampleIndexes),]
   smap <- smap[!is.na(smap$sampleIndexes),]
-  expression <- ds[1:ds@shape[1], smap$sampleIndexes]
+  if (arch_version >= 9) {
+    expression <- ds[1:ds@shape[1], smap$sampleIndexes]
+  } else {
+    expression <- ds[smap$sampleIndexes, 1:ds@shape[2]]
+    expression <- t(expression)
+  }
   rownames(expression) <- genes
   colnames(expression) <- smap$geo_accession
   es <- es[,es$geo_accession %in% colnames(expression)]
@@ -143,7 +152,7 @@ loadCountsFromHSDS <- function(es, url) {
   sampleIndexes <- DT_counts_meta_indexes[na.omit(sampleIndexes), ]$indexes
 
   filename <- paste0(dir, '/', destfile)
-  es2 <- loadCountsFromH5FileHSDS(es, src, filename, sample_id, gene_id, gene_id_type, sampleIndexes)
+  es2 <- loadCountsFromH5FileHSDS(es, url, filename, sample_id, gene_id, gene_id_type, sampleIndexes)
   return(es2)
 }
 

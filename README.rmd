@@ -4,14 +4,16 @@ output:
     variant: markdown_github
 ---
 ```{r}
+
+
 library(GEOquery)
 library(rhdf5client)
 library(phantasusLite)
 ess <- getGEO("GSE164173")
-
-src <- HSDSSource('https://ctlab.itmo.ru/hsds/')
-ess <- ess[[1]]
-ess <- loadCountsFromHSDS(ess, src, '/counts')
-head(exprs(ess))
+url <- 'https://ctlab.itmo.ru/hsds/?domain=/counts'
+es <- ess[[1]]
+head(exprs(es))
+es <- loadCountsFromHSDS(es, url)
+head(exprs(es))
 
 ```

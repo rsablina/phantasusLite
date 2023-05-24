@@ -119,10 +119,18 @@ ess <- getGEO("GSE164173")
     ## GSE164173_series_matrix.txt.gz
 
 ``` r
-src <- HSDSSource('https://ctlab.itmo.ru/hsds/')
-ess <- ess[[1]]
-ess <- loadCountsFromHSDS(ess, src, '/counts')
-head(exprs(ess))
+url <- 'https://ctlab.itmo.ru/hsds/?domain=/counts'
+es <- ess[[1]]
+head(exprs(es))
+```
+
+    ##      GSM4998765 GSM4998766 GSM4998767 GSM4998768 GSM4998769 GSM4998770
+    ##      GSM4998771 GSM4998772 GSM4998773 GSM4998774 GSM4998775 GSM4998776
+    ##      GSM4998777 GSM4998778 GSM4998779 GSM4998780
+
+``` r
+es <- loadCountsFromHSDS(es, url)
+head(exprs(es))
 ```
 
     ##               GSM4998773 GSM4998774 GSM4998775 GSM4998776 GSM4998777 GSM4998778

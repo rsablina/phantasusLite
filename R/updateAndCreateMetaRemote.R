@@ -2,6 +2,7 @@ getIndexRemote <- function(src, collections) {
   DT_h5_meta <- data.table()
   for (collection in collections) {
     filepath <- paste0('/counts/', collection, '/')
+    src <- HSDSSource(src)
     metaf <- HSDSFile(src, paste0(filepath, collection, '.h5'))
     metads <- HSDSDataset(metaf, '/meta')
     h5_meta <- metads[1:metads@shape]
@@ -19,8 +20,6 @@ getIndexRemote <- function(src, collections) {
   }
   DT_h5_meta$chunk <- gsmtochunk(DT_h5_meta$accession)
   return(DT_h5_meta)
-
-
 }
 
 createIndexH5REmote <- function(src) {
