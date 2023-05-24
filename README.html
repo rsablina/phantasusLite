@@ -352,6 +352,9 @@ display: none;
 </div>
 
 
+<div id="header" class="section level2">
+<h2>#Header</h2>
+<p>output: md_document: variant: markdown_github —</p>
 <pre class="r"><code>library(GEOquery)</code></pre>
 <pre><code>## Loading required package: Biobase</code></pre>
 <pre><code>## Loading required package: BiocGenerics</code></pre>
@@ -430,27 +433,31 @@ display: none;
 ## 
 ##     apply, rowsum, scale, sweep</code></pre>
 <pre class="r"><code>library(phantasusLite)
-ess &lt;- getGEO(&quot;GSE164173&quot;)</code></pre>
+ess &lt;- getGEO(&quot;GSE85653&quot;)</code></pre>
 <pre><code>## Found 1 file(s)</code></pre>
-<pre><code>## GSE164173_series_matrix.txt.gz</code></pre>
-<pre class="r"><code>src &lt;- HSDSSource(&#39;https://ctlab.itmo.ru/hsds/&#39;)
-ess &lt;- ess[[1]]
-ess &lt;- loadCountsFromHSDS(ess, src, &#39;/counts&#39;)
-head(exprs(ess))</code></pre>
-<pre><code>##               GSM4998773 GSM4998774 GSM4998775 GSM4998776 GSM4998777 GSM4998778
-## 0610007P14Rik        672        531        556        611        789        892
-## 0610009B22Rik         59         61         96        135        111        155
-## 0610009L18Rik          1         30         36         12         21         37
-## 0610009O20Rik        147        183        191        140        211        208
-## 0610010F05Rik        145        115         96        109         98        194
-## 0610010K14Rik        566        408        488        406        663        518
-##               GSM4998779 GSM4998780
-## 0610007P14Rik        743        938
-## 0610009B22Rik        168        298
-## 0610009L18Rik         11         27
-## 0610009O20Rik        168        238
-## 0610010F05Rik         80         47
-## 0610010K14Rik        526        650</code></pre>
+<pre><code>## GSE85653_series_matrix.txt.gz</code></pre>
+<pre class="r"><code>url &lt;- &#39;https://ctlab.itmo.ru/hsds/?domain=/counts&#39;
+es &lt;- ess[[1]]
+head(exprs(es))</code></pre>
+<pre><code>##      GSM2280286 GSM2280287 GSM2280288 GSM2280289 GSM2280290 GSM2280291
+##      GSM2280292 GSM2280293 GSM2280294 GSM2280295 GSM2280296 GSM2280297</code></pre>
+<pre class="r"><code>es &lt;- loadCountsFromHSDS(es, url)
+head(exprs(es))</code></pre>
+<pre><code>##           GSM2280286 GSM2280287 GSM2280288 GSM2280289 GSM2280290 GSM2280291
+## AT1G01010         56         85        118         90         45         64
+## AT1G01020        210        221        194        193        251        288
+## AT1G01030        100         99         51         38         51         64
+## AT1G01040        613        599        701       1140       1193       1415
+## AT1G01050       1258       1418       1070       1624       1739       2428
+## AT1G01060        270        329        291       3499       3762       5499
+##           GSM2280292 GSM2280293 GSM2280294 GSM2280295 GSM2280296 GSM2280297
+## AT1G01010        171        169        191         67        129        114
+## AT1G01020        241        212        287        156        211        238
+## AT1G01030         34         50         46         56        118         83
+## AT1G01040       1188       1243       1530        506        812        837
+## AT1G01050       1544       1548       1967        805       1281       1283
+## AT1G01060       2585       3003       3913        225        415        355</code></pre>
+</div>
 
 
 

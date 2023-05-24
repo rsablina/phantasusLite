@@ -8,7 +8,7 @@ removeRepeatWords <- function(titles) {
   if (all(grepl("-$", titles_without_repeat_words, ignore.case = TRUE))) titles_without_repeat_words <- sub("-$", "", titles_without_repeat_words, ignore.case = TRUE, perl = TRUE)
   return(titles_without_repeat_words)
 }
-
+#' @export
 inferConditionImpl <- function(gse_titles) {
   inferCondition <- gse_titles
   rep_num <- NULL
@@ -64,13 +64,13 @@ inferConditionImpl <- function(gse_titles) {
     return(list(condition=inferCondition, replicate=rep_num))
   else return(list())
 }
-
+#' @export
 inferCondition <- function(es) {
   newAnnot <- inferConditionImpl(es$title)
   if (length(newAnnot) == 2) {
     pData(es)$condition <- newAnnot$condition
     pData(es)$replicate <- newAnnot$replicate
   }
-  es
+  return(es)
 }
 

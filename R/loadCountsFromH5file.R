@@ -86,14 +86,14 @@ loadCountsFromH5FileHSDS <- function(es, url, file, sample_id = NULL, gene_id = 
   if (!toupper(gene_id_type) == "GENE SYMBOL") {
     tryCatch({
       gene_symbol <- HSDSDataset(f, "/meta/genes/gene_symbol")
-      gene_symbol <- gene_symbol[1:gene_symbol@shape]
+      gene_symbol <- unlist(gene_symbol[1:gene_symbol@shape])
       fData(es2) <- cbind(fData(es2), "Gene symbol" = gene_symbol)
     }, error = function(e) {})
   }
   if (!toupper(gene_id_type) == "ENSEMBLID") {
     tryCatch({
       entrez_id <- HSDSDataset(f, "/meta/genes/ensembl_gene_id")
-      entrez_id <- entrez_id[1:entrez_id@shape]
+      entrez_id <- unlist(entrez_id[1:entrez_id@shape])
       fData(es2) <- cbind(fData(es2), "ENSEMBLID" = entrez_id)
     }, error = function(e) {})
   }
@@ -133,6 +133,7 @@ loadCountsFromHSDS <- function(es, url) {
   }
   setorderv(x = sample_amount,cols = c("N","type_fac"),order = c(-1,1))
   destfile <- sample_amount[,.SD[1]]$file
+
   collection <- sample_amount[,.SD[1]]$type_fac
 
   metafilepath <- paste0(dir,'/', collection, '/', collection, '.h5')
