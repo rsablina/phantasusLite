@@ -1,3 +1,0 @@
-"file_name" "sample_id" "gene_id" "gene_id_type"
-"1" "dee2_mouse_matrix.h5" "/meta/Sample_geo_accession" "/meta/genes/genes" "Gene Symbol"
-"2" "dee2_mouse_matrix1.h5" "/meta/Sample_geo_accession" "/meta/genes/genes" "Gene Symbol"

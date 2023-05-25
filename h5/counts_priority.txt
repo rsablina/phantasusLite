@@ -1,6 +1,0 @@
-directory	priority
-.	1
-	2
-archs4	3
-archs4_zoo	4
-dee2	5
