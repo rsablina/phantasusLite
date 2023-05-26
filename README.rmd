@@ -23,22 +23,45 @@ install_github("assaron/rhdf5client")
 install_github("rsablina/phantasusLite")
 ```
 
+## Dependencies
+
+To run the code you need:
+
+-   `GEOquery`
+-   `rhdf5client`
+-   `phantasuslite`
+
+```{r message=FALSE}
+library(GEOquery)
+library(rhdf5client)
+library(phantasusLite)
+```
+
+
 ## Quick start
 
 To run the package enter the code sample below.
 
-ExpressionSet from the GEO doesn't contain the expression matrix -- exprs(es) is empty. Function loadCountsFromHSDS returns an ExpressionSet with the expression matrix -- the second exprs(es) contains an expression matrix.
+Let's load the ExpressionSet from GEO
+
+```{r message=FALSE}
+ess <- getGEO("GSE85653")
+es <- ess[[1]]
+```
+
+
+ExpressionSet from the GEO doesn't contain the expression matrix -- exprs(es) is empty.
+
+```{r}
+head(exprs(es))
+```
+
+Function loadCountsFromHSDS returns an ExpressionSet with the expression matrix -- the second exprs(es) contains an expression matrix.
 
 The remote repository URL is '<https://ctlab.itmo.ru/hsds/?domain=/counts>'.
 
-```{r message=FALSE, eval=FALSE}
-library(GEOquery)
-library(rhdf5client)
-library(phantasusLite)
-ess <- getGEO("GSE85653")
+```{r}
 url <- 'https://ctlab.itmo.ru/hsds/?domain=/counts'
-es <- ess[[1]]
-head(exprs(es))
 es <- loadCountsFromHSDS(es, url)
 head(exprs(es))
 ```
