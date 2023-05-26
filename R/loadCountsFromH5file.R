@@ -33,13 +33,13 @@ loadCountsFromH5FileHSDS <- function(es, url, file, sample_id = NULL, gene_id = 
     metads <- HSDSDataset(metaf, '/meta')
     metatable <- metads[1:metads@shape]
     if (is.null(sample_id)) {
-      sample_id <- metatable$sample_id[metatable$file_name == file]
+      sample_id <- metatable$sample_id[metatable$file_name == substring(file, nchar(dir) + nchar(collection) + 3)]
     }
     if (is.null(gene_id)) {
-      gene_id <- metatable$gene_id[metatable$file_name == file]
+      gene_id <- metatable$gene_id[metatable$file_name == substring(file, nchar(dir) + nchar(collection) + 3)]
     }
     if (is.null(gene_id_type)) {
-      gene_id_type <- metatable$gene_id_type[metatable$file_name == file]
+      gene_id_type <- metatable$gene_id_type[metatable$file_name == substring(file, nchar(dir) + nchar(collection) + 3)]
     }
   }
 

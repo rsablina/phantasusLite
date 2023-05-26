@@ -17,7 +17,9 @@ install_github("assaron/rhdf5client")
 install_github("rsablina/phantasusLite")
 ```
 
-To run the package enter the code sample below. ExpressionSet from the GEO doesn't contain the expression matrix -- exprs(es) is empty. Function loadCountsFromHSDS returns an ExpressionSet with the expression matrix -- the second exprs(es) contains an expression matrix.
+To run the package enter the code sample below. 
+
+ExpressionSet from the GEO doesn't contain the expression matrix -- exprs(es) is empty. Function loadCountsFromHSDS returns an ExpressionSet with the expression matrix -- the second exprs(es) contains an expression matrix.
 
 The remote repository URL is '<https://ctlab.itmo.ru/hsds/?domain=/counts>'.
 
@@ -32,4 +34,5 @@ head(exprs(es))
 es <- loadCountsFromHSDS(es, url)
 head(exprs(es))
 ```
- 
+
+
