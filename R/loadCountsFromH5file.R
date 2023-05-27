@@ -1,4 +1,8 @@
-gsmtochunk <- function(samples) {
+#' @import utils
+#' @import stats
+#' @import httr
+
+gsmToChunk <- function(samples) {
   chunks <- ifelse(nchar(samples) >= 7, substring(samples, 1, nchar(samples) - 4), "GSM0")
   return(paste0(chunks,"nnnn"))
 }
@@ -119,7 +123,7 @@ loadCountsFromHSDS <- function(es, url) {
 
   metaindexpath <- paste(dir,"/index.h5",sep="")
   indexf <- HSDSFile(src, metaindexpath)
-  sampleschunk <- unique(gsmtochunk(es$geo_accession))
+  sampleschunk <- unique(gsmToChunk(es$geo_accession))
   DT_counts_meta_indexes <- data.table()
   for (chunk in sampleschunk) {
       indexds <- HSDSDataset(indexf, paste0('/',chunk))

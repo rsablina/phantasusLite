@@ -1,3 +1,8 @@
+#' @import data.table
+#' @import rhdf5
+#' @import rhdf5client
+#' @import phantasus
+
 createH5 <- function(data, file, dataset_name) {
   if (file.exists(file)) {
     unlink(file, recursive = FALSE)
@@ -104,7 +109,7 @@ updateIndexH5 <- function(counts_dir, force = FALSE, verbose = FALSE){
     rm(DT_part)
 
   }
-  DT_counts_meta$chunk <- gsmtochunk(DT_counts_meta$accession)
+  DT_counts_meta$chunk <- gsmToChunk(DT_counts_meta$accession)
   DT_counts_meta_split <- split(DT_counts_meta, DT_counts_meta$chunk)
   createIndexH5(DT_counts_meta_split, 'index.h5')
   save(DT_counts_meta, file = meta_name, eval.promises = TRUE)

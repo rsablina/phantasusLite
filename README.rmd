@@ -31,7 +31,7 @@ To run the code you need:
 -   `rhdf5client`
 -   `phantasuslite`
 
-```{r message=FALSE}
+```{r message=FALSE, warning=FALSE}
 library(GEOquery)
 library(rhdf5client)
 library(phantasusLite)

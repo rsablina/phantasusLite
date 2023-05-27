@@ -1,3 +1,5 @@
+#' @import rhdf5client
+#' @import data.table
 getIndexRemote <- function(src, collections) {
   DT_h5_meta <- data.table()
   for (collection in collections) {
@@ -18,7 +20,7 @@ getIndexRemote <- function(src, collections) {
     }
 
   }
-  DT_h5_meta$chunk <- gsmtochunk(DT_h5_meta$accession)
+  DT_h5_meta$chunk <- gsmToChunk(DT_h5_meta$accession)
   return(DT_h5_meta)
 }
 
