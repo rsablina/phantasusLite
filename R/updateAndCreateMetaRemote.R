@@ -1,3 +1,8 @@
+#' Creates a data table with indexes and chunks of samples in rempte HDF5-files
+#'
+#' @param src, contains url of the server
+#' @param collections, contains names of the collections
+#'
 #' @import rhdf5client
 #' @import data.table
 getIndexRemote <- function(src, collections) {
