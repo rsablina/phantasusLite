@@ -2,7 +2,7 @@
 % Please edit documentation in R/updateAndCreateMetaRemote.R
 \name{getIndexRemote}
 \alias{getIndexRemote}
-\title{Creates a data table with indexes and chunks of samples in rempte HDF5-files}
+\title{Creates a data table with indexes and chunks of samples in remote HDF5-files}
 \usage{
 getIndexRemote(src, collections)
 }
@@ -11,6 +11,9 @@ getIndexRemote(src, collections)
 
 \item{collections, }{contains names of the collections}
 }
+\value{
+table with samples, indexes and chunks in all HDF5-files
+}
 \description{
-Creates a data table with indexes and chunks of samples in rempte HDF5-files
+Creates a data table with indexes and chunks of samples in remote HDF5-files
 }

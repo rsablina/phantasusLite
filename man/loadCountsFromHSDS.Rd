@@ -4,7 +4,7 @@
 \alias{loadCountsFromHSDS}
 \title{Load count matrix from HDF5-files.}
 \usage{
-loadCountsFromHSDS(es, url)
+loadCountsFromHSDS(es, url = "https://ctlab.itmo.ru/hsds/?domain=/counts")
 }
 \arguments{
 \item{es, }{containing ExpressionSet loaded from GEO. Contains empty expression matrix.}

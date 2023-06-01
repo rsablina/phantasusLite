@@ -1,6 +1,5 @@
-#' @import rhdf5
-
 createH5 <- function(data, file, dataset_name) {
+  stopifnot(requireNamespace("rhdf5"))
   if (file.exists(file)) {
     unlink(file, recursive = FALSE)
   }
@@ -9,9 +8,8 @@ createH5 <- function(data, file, dataset_name) {
   H5close()
 }
 
-#' @import data.table
-#' @import rhdf5
 createMetaH5 <- function(counts_dir){
+  stopifnot(requireNamespace("rhdf5"))
   collections <- list.dirs(counts_dir, full.names = FALSE)
   collections <- collections[-1]
   for (collection in collections) {
@@ -25,9 +23,8 @@ createMetaH5 <- function(counts_dir){
 }
 
 
-#' @import data.table
-#' @import rhdf5
 createPriorityH5 <- function(counts_dir, force = FALSE, verbose = FALSE){
+  stopifnot(requireNamespace("rhdf5"))
   if (!dir.exists(counts_dir)) {
     message(paste0('Counts directory ', counts_dir, " does not extist" ))
     return()
@@ -55,6 +52,7 @@ createPriorityH5 <- function(counts_dir, force = FALSE, verbose = FALSE){
 
 
 updateIndexH5 <- function(counts_dir, force = FALSE, verbose = FALSE){
+  stopifnot(requireNamespace("rhdf5"))
   if (!dir.exists(counts_dir)) {
     message(paste0('Counts directory ', counts_dir, " does not extist" ))
     return()
@@ -150,6 +148,7 @@ getCountsMetaPart <- function(counts_dir, collection_name, verbose){
 }
 
 createIndexH5 <- function(data, file) {
+  stopifnot(requireNamespace("rhdf5"))
   h5createFile(file)
   names <- names(data)
   for (i in seq_along(names)) {
@@ -192,6 +191,7 @@ updateDEE2meta <- function(destDir = file.path(getOption("phantasusCacheDir"), "
 
 
 updateARCHS4meta <- function(archDir = file.path(getOption("phantasusCacheDir"), "counts/archs4")){
+  stopifnot(requireNamespace("rhdf5"))
   archs4files <- list.files(archDir, pattern = '\\.h5$')
   DT_meta <- data.frame(matrix(ncol = 4, nrow = length(archs4files), dimnames = list(NULL, c("file_name", "sample_id", 	"gene_id", "gene_id_type"))))
   DT_meta$file_name <- archs4files
@@ -241,6 +241,7 @@ updateARCHS4meta <- function(archDir = file.path(getOption("phantasusCacheDir"),
 }
 
 validateCountsCollection <- function(collectionDir, verbose=FALSE){
+  stopifnot(requireNamespace("rhdf5"))
   if (!file.exists(file.path(collectionDir, "meta.txt"))) {
     if (verbose) {
       message(paste0("metafile does not exist in ",  file.path(collectionDir)))

@@ -100,7 +100,7 @@ loadCountsFromH5FileHSDS <- function(es, url, file, sample_id = NULL, gene_id = 
                            phenoData = phenoData(es[, !is.na(sampleIndexes)]),
                            annotation = annotation(es),
                            experimentData = experimentData(es))
-  es@phenoData$gene_coutns_source <- file
+  experimentData(es)@preprocessing$gene_counts_source <- file
   if (!toupper(gene_id_type) == "GENE SYMBOL") {
     tryCatch({
       gene_symbol <- HSDSDataset(f, "/meta/genes/gene_symbol")
@@ -124,9 +124,7 @@ loadCountsFromH5FileHSDS <- function(es, url, file, sample_id = NULL, gene_id = 
 #' @param url, containing url of the server and root domain.
 #'
 #' @export
-#' @import data.table
-#' @import rhdf5client
-loadCountsFromHSDS <- function(es, url) {
+loadCountsFromHSDS <- function(es, url='https://ctlab.itmo.ru/hsds/?domain=/counts') {
   if (nrow(es) > 0) {
     return(es)
   }
