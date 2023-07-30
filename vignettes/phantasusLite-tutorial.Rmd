@@ -80,14 +80,14 @@ getHSDSCollectionFileList(url, collection)
 One can get an expression matrix from the specific HDF5-file:
 
 ```{r}
-file <- "mouse_matrix_v11.h5"
-es <- loadCountsFromH5FileHSDS <- function(es, url, file)
+#file <- "/counts/archs4/mouse_matrix_v11.h5"
+#es1 <- loadCountsFromH5FileHSDS(es, url, file)
 ```
 
 One can get an expression matrix from the HDF5-file with the data for the biggest number of samples.
 
 ```{r}
-es <- loadCountsFromHSDS(es, url)
+es2 <- loadCountsFromHSDS(es, url)
 ```
 
 Now ExpressionSet contains an expression matrix for the samples:
