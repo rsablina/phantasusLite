@@ -20,7 +20,7 @@ To install the package you should:
 1.  Install R-package rhdf5client from the github
 2.  Install R-package phantasusLite from the github
 
-``` r
+```{r}
 library(devtools)
 install_github("assaron/rhdf5client")
 install_github("rsablina/phantasusLite")

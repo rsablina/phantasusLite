@@ -52,7 +52,7 @@ getHSDSCollectionFileList <- function(url='https://ctlab.itmo.ru/hsds/?domain=/c
 getHSDSFileList <- function(url='https://ctlab.itmo.ru/hsds/?domain=/counts') {
     src <- httr::parse_url(url)
     dir <- src$query$domain
-    dir <- paste0(dir, '/', collection)
+    #dir <- paste0(dir, '/', collection)
     src <- paste0(src$scheme,'://',src$hostname,'/',src$path)
     src <- HSDSSource(src)
     request <- paste0(src@endpoint, "/domains?domain=",
