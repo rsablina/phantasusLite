@@ -1,3 +1,8 @@
+#' Creates a data table with indexes and chunks of samples in remote HDF5-files
+#'
+#' @param src, contains url of the server
+#' @param collections, contains names of the collections
+#' @return table with samples, indexes and chunks in all HDF5-files
 getIndexRemote <- function(src, collections) {
   DT_h5_meta <- data.table()
   for (collection in collections) {
@@ -18,7 +23,7 @@ getIndexRemote <- function(src, collections) {
     }
 
   }
-  DT_h5_meta$chunk <- gsmtochunk(DT_h5_meta$accession)
+  DT_h5_meta$chunk <- gsmToChunk(DT_h5_meta$accession)
   return(DT_h5_meta)
 }
 

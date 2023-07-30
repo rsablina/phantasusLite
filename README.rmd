@@ -1,10 +1,16 @@
 ---
-output:
-  md_document:
-    variant: markdown_github
+output: github_document
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# PhantasusLite
+
 PhantasusLite -- a tool designed to integrate the work with RNA-Seq count matrices into a single and fast R-pipeline. This R-package supports loading the data from GEO by GSE. It provides url access to the remote repository with the archs4, archs4_zoo and dee2 HDF5-files for getting the count matrix. Finally phantasusLite allows to get an ExpressionSet with the expression matrix for future differential expression analysis.
+
+## Installation
 
 To install the package you should:
 
@@ -17,22 +23,45 @@ install_github("assaron/rhdf5client")
 install_github("rsablina/phantasusLite")
 ```
 
-To run the package enter the code sample below. 
+## Dependencies
 
-ExpressionSet from the GEO doesn't contain the expression matrix -- exprs(es) is empty. Function loadCountsFromHSDS returns an ExpressionSet with the expression matrix -- the second exprs(es) contains an expression matrix.
+To run the code you need:
 
-The remote repository URL is '<https://ctlab.itmo.ru/hsds/?domain=/counts>'.
+-   `GEOquery`
+-   `rhdf5client`
+-   `phantasuslite`
 
-```{r message=FALSE, eval=FALSE}
+```{r message=FALSE, warning=FALSE}
 library(GEOquery)
 library(rhdf5client)
 library(phantasusLite)
-ess <- getGEO("GSE85653")
-url <- 'https://ctlab.itmo.ru/hsds/?domain=/counts'
-es <- ess[[1]]
-head(exprs(es))
-es <- loadCountsFromHSDS(es, url)
-head(exprs(es))
 ```
 
 
+## Quick start
+
+To run the package enter the code sample below.
+
+Let's load the ExpressionSet from GEO
+
+```{r message=FALSE}
+ess <- getGEO("GSE85653")
+es <- ess[[1]]
+```
+
+
+ExpressionSet from the GEO doesn't contain the expression matrix -- exprs(es) is empty.
+
+```{r}
+head(exprs(es))
+```
+
+Function loadCountsFromHSDS returns an ExpressionSet with the expression matrix -- the second exprs(es) contains an expression matrix.
+
+The remote repository URL is '<https://ctlab.itmo.ru/hsds/?domain=/counts>'.
+
+```{r}
+url <- 'https://ctlab.itmo.ru/hsds/?domain=/counts'
+es <- loadCountsFromHSDS(es, url)
+head(exprs(es))
+```

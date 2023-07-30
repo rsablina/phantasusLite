@@ -8,6 +8,10 @@ removeRepeatWords <- function(titles) {
   if (all(grepl("-$", titles_without_repeat_words, ignore.case = TRUE))) titles_without_repeat_words <- sub("-$", "", titles_without_repeat_words, ignore.case = TRUE, perl = TRUE)
   return(titles_without_repeat_words)
 }
+
+#' Create condition from the samples title
+#' @param gse_titles, contains titles
+#'
 #' @export
 inferConditionImpl <- function(gse_titles) {
   inferCondition <- gse_titles
@@ -64,6 +68,10 @@ inferConditionImpl <- function(gse_titles) {
     return(list(condition=inferCondition, replicate=rep_num))
   else return(list())
 }
+
+#' Adds condition to the annotation.
+#' @param es, contains ExpressionSet object
+#'
 #' @export
 inferCondition <- function(es) {
   newAnnot <- inferConditionImpl(es$title)
