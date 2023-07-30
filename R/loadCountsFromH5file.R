@@ -1,4 +1,9 @@
-gsmtochunk <- function(samples) {
+#' Gets chunk from GSE identifiers.
+#' @param samples, containing a list of samples
+#' @return list of chunks
+#'
+
+gsmToChunk <- function(samples) {
   chunks <- ifelse(nchar(samples) >= 7, substring(samples, 1, nchar(samples) - 4), "GSM0")
   return(paste0(chunks,"nnnn"))
 }
@@ -15,8 +20,21 @@ getSamples <- function(h5f, samples_id) {
   return(unlist(sampleIndexes))
 }
 
+#' Load count matrix from remote HDF5-file
+#' @param es, containing ExpressionSet loaded from GEO. Contains empty expression matrix.
+#'
+#' @param url, containing url of the server and root domain.
+#' @param file, containing name of the file
+#' @param sample_id, containing path to the dataset with sample ids
+#' @param gene_id, containing path to the dataset with gene ids
+#' @param gene_id_type, containing path to the dataset with gene id type
+#' @param sampleIndexes, containing sample indexes list
+#'
+#' @return ExpressionSet object with loaded count matrix
+#'
 #' @export
 #' @import data.table
+#' @import rhdf5client
 loadCountsFromH5FileHSDS <- function(es, url, file, sample_id = NULL, gene_id = NULL, gene_id_type = NULL, sampleIndexes = NULL) {
   if (nrow(es) > 0) {
     return(es)
@@ -82,7 +100,7 @@ loadCountsFromH5FileHSDS <- function(es, url, file, sample_id = NULL, gene_id = 
                            phenoData = phenoData(es[, !is.na(sampleIndexes)]),
                            annotation = annotation(es),
                            experimentData = experimentData(es))
-
+  experimentData(es2)@preprocessing$gene_counts_source <- file
   if (!toupper(gene_id_type) == "GENE SYMBOL") {
     tryCatch({
       gene_symbol <- HSDSDataset(f, "/meta/genes/gene_symbol")
@@ -100,10 +118,13 @@ loadCountsFromH5FileHSDS <- function(es, url, file, sample_id = NULL, gene_id = 
 
   return(es2)
 }
+#' Load count matrix from HDF5-files.
+#' @param es, containing ExpressionSet loaded from GEO. Contains empty expression matrix.
+#'
+#' @param url, containing url of the server and root domain.
+#'
 #' @export
-#' @import rhdf5client
-#' @import data.table
-loadCountsFromHSDS <- function(es, url) {
+loadCountsFromHSDS <- function(es, url='https://ctlab.itmo.ru/hsds/?domain=/counts') {
   if (nrow(es) > 0) {
     return(es)
   }
@@ -119,7 +140,7 @@ loadCountsFromHSDS <- function(es, url) {
 
   metaindexpath <- paste(dir,"/index.h5",sep="")
   indexf <- HSDSFile(src, metaindexpath)
-  sampleschunk <- unique(gsmtochunk(es$geo_accession))
+  sampleschunk <- unique(gsmToChunk(es$geo_accession))
   DT_counts_meta_indexes <- data.table()
   for (chunk in sampleschunk) {
       indexds <- HSDSDataset(indexf, paste0('/',chunk))
@@ -156,6 +177,3 @@ loadCountsFromHSDS <- function(es, url) {
   es2 <- loadCountsFromH5FileHSDS(es, url, filename, sample_id, gene_id, gene_id_type, sampleIndexes)
   return(es2)
 }
-
-
-
